@@ -3,6 +3,9 @@
 # build products
 tribble
 
+# weird stuff created by Vim
+*.swp
+
 # Prerequisites
 *.d
 
