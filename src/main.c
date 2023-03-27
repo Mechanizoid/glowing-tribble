@@ -43,7 +43,8 @@ int main(void)
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	/* create window object */
-	GLFWwindow *window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
+	GLFWwindow *window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT,
+					      "LearnOpenGL", NULL, NULL);
 	if (window == NULL) {
 		fprintf(stderr, "Failed to create GLFW window\n");
 		glfwTerminate();
@@ -108,8 +109,8 @@ int main(void)
 	/* vertex array */
 	float vertices[] = {
 		-0.5f, -0.5f, 0.0f,
-		 0.5, -0.5f, 0.0f,
-		 0.0f,  0.5f, 0.0f
+		0.5f, -0.5f, 0.0f,
+		0.0f, 0.5f, 0.0f,
 	};
 
 	/* create VAO and VBO; then bind objects to it */
@@ -141,7 +142,7 @@ int main(void)
 		/* draw triangles */
 		glUseProgram(shaderProgram);
 		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 
 		/* swap buffers */
