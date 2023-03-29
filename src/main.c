@@ -11,7 +11,6 @@
 #define SCR_HEIGHT 600
 
 /* function declarations */
-int check_compile_errors(unsigned int shader, const char *type);
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void process_input(GLFWwindow *window);
 
