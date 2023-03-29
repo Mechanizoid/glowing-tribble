@@ -1,14 +1,13 @@
 /* load shaders from seperate GLSL source files */
 
-#include "shaders.h"
 #include <GL/glew.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "shaders.h"
 
-
+/* global type definitions */
 enum Type{Vertex, Fragment};
-
 
 /* function declarations */
 static char *load_shader_src(char *filename);
@@ -53,8 +52,10 @@ unsigned int load_shader_prog(char *v_src_file, char *f_src_file)
 }
 
 
-/* Compiles vertex or fragment shader from provided source code.
- * Returns reference to compiled shader.
+/* Compiles vertex or fragment shader from provided source code, then
+ * checks for compile errors. If an error is found, it is logged and
+ * then the program exits. If compilation is successful, returns the
+ * integer handle to the newly compiled shader.
  */
 static unsigned int compile_shader(enum Type t, char *src)
 {
@@ -87,7 +88,10 @@ static unsigned int compile_shader(enum Type t, char *src)
 	return shader;	
 }
 
-
+/* Attempts to open the file of GLSL source code named in the char*
+ * parameter. If it is successful, the function returns a pointer
+ * to a buffer containing the requested shader source.
+ */
 static char *load_shader_src(char *filename)
 {
 	FILE *fp;

@@ -53,12 +53,13 @@ int main(void)
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 
-	/* get shader program */
+	/* === Set Up Shader Program === */
 	shader_prog = load_shader_prog("./src/shaders/vertex.glsl",
 				       "./src/shaders/fragment.glsl");
 
 	
-	/* set up vertices to draw */
+	/* === Store Elements in Buffers === */
+	
 	/* vertex array */
 	float vertices[] = {
 		-0.5f, -0.5f, 0.0f, // bottom left
@@ -72,7 +73,10 @@ int main(void)
 		0, 3, 2
 	};
 
-	/* create VAO, vbo, & ebo; then bind objects to it */
+	/* Create vertex array object to hold our vertex buffer and index
+	 * buffer objects, then initialize them and store vertices and
+	 * indices in their respective objects.
+	 */
 	unsigned int vao, vbo, ebo;
 
 	glGenVertexArrays(1, &vao);
