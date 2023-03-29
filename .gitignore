@@ -8,6 +8,8 @@ tribble
 
 # weird backup Emacs backup files
 *.~
+*#*#
+.#*
 
 # Prerequisites
 *.d
