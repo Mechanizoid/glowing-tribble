@@ -6,6 +6,9 @@ tribble
 # weird stuff created by Vim
 *.swp
 
+# weird backup Emacs backup files
+*.~
+
 # Prerequisites
 *.d
 
