@@ -97,6 +97,7 @@ static char *load_shader_src(char *filename)
 	FILE *fp;
 	char *src;
 	size_t size;
+	int i = 0;
 
 	fp = fopen(filename, "r");
 	if (NULL == fp) {
@@ -110,16 +111,17 @@ static char *load_shader_src(char *filename)
 	size = ftell(fp);
 	rewind(fp);
 
-	src = calloc(size, sizeof(char));
+	src = calloc(size + 1, sizeof(char));
 	if (NULL == src) {
 		fprintf(stderr,
 			"ERROR: call of calloc() failed in load_shader_src()\n");
 		exit(EXIT_FAILURE);
 	}
 
-	for (int i = 0; i < size; i++) {
+	for ( ; i < size; i++) {
 		src[i] = fgetc(fp);
 	}
+	src[i] = '\0';
 
 	return src;
 }
