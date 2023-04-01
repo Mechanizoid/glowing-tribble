@@ -46,17 +46,17 @@ int main(void)
 	}
 
 	/* set viewport */
-	glViewport(0, 0, 800, 600);
+	glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
 
 	/* set framebuffer size callback before entering render loop */
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 
 	/* === Set Up Shader Programs === */
-	shaders[0] = load_shader_prog("./src/shaders/vertex.glsl",
-				      "./src/shaders/frag_orange.glsl");
-	shaders[1] = load_shader_prog("./src/shaders/vertex.glsl",
-				      "./src/shaders/frag_yellow.glsl");
+	shaders[0] = load_shader_prog("./shaders/vertex.glsl",
+				      "./shaders/frag_orange.glsl");
+	shaders[1] = load_shader_prog("./shaders/vertex.glsl",
+				      "./shaders/frag_yellow.glsl");
 
 
 	/* === Store Elements in Buffers === */
