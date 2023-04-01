@@ -108,7 +108,7 @@ static char *load_shader_src(char *filename)
 		exit(EXIT_FAILURE);
 	}
 
-	fprintf(stdout, "Opened source file: %s\n", filename);
+	fprintf(stdout, "Status: opened source file: %s\n", filename);
 	// find size of file
 	fseek(fp, 0L, SEEK_END);
 	size = ftell(fp);
