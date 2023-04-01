@@ -4,7 +4,9 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <errno.h>
 #include "shaders.h"
+
 
 /* global type definitions */
 enum Type{Vertex, Fragment};
@@ -102,6 +104,7 @@ static char *load_shader_src(char *filename)
 	fp = fopen(filename, "r");
 	if (NULL == fp) {
 		fprintf(stderr, "ERROR: failed to open file %s\n", filename);
+		fprintf(stderr, "Value of errno: %d\n", errno);
 		exit(EXIT_FAILURE);
 	}
 
@@ -122,6 +125,8 @@ static char *load_shader_src(char *filename)
 		src[i] = fgetc(fp);
 	}
 	src[i] = '\0';
+
+	fclose(fp);
 
 	return src;
 }

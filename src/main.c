@@ -16,8 +16,8 @@ void process_input(GLFWwindow *window);
 
 int main(void)
 {
-	unsigned int shader_prog;
-	
+	unsigned int shaders[2];
+
 	/* === Open window and initialize OpenGL === */
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -41,27 +41,27 @@ int main(void)
 		/* problem, glewInit() failed, something is seriously wrong */
 		fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
 	} else {
-		fprintf(stdout, "Status: using GLEW %s\n", glewGetString(GLEW_VERSION));
-	}	
+		fprintf(stdout, "Status: using GLEW %s\n",
+			glewGetString(GLEW_VERSION));
+	}
 
 	/* set viewport */
 	glViewport(0, 0, 800, 600);
-	
-	/* set framebuffer size callback, we do this after the window is created but
-	 * before we enter the render loop
-	 */
+
+	/* set framebuffer size callback before entering render loop */
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 
-	/* === Set Up Shader Program === */
-	shader_prog = load_shader_prog("./src/shaders/vertex.glsl",
-				       "./src/shaders/fragment.glsl");
+	/* === Set Up Shader Programs === */
+	shaders[0] = load_shader_prog("./src/shaders/vertex.glsl",
+				      "./src/shaders/frag_orange.glsl");
+	shaders[1] = load_shader_prog("./src/shaders/vertex.glsl",
+				      "./src/shaders/frag_yellow.glsl");
 
-	
+
 	/* === Store Elements in Buffers === */
-	
+
 	/* vertex array */
-	/* modify this too add TWO triangles */
 	float triangle1[] = {
 		// first triangle
 		-0.75f, -0.25f, 0.0f,   // bottom left
@@ -72,15 +72,9 @@ int main(void)
 	float triangle2[] = {
 		// second triangle
 		0.25f, -0.25f, 0.0f,    // bottom left
-		0.5f, 0.25f, 0.0f,      // top 
+		0.5f, 0.25f, 0.0f,      // top
 		0.75f, -0.25f, 0.0f,    // bottom right
-	}; 
-
-	/* unsigned int indices[] = { */
-	/* 	0, 1, 2,           // first triangle */
-	/* 	3, 4, 5, */
-	/* 	6, 7, 8, */
-	/* }; */
+	};
 
 	/* Create vertex array object to hold our vertex buffer and index
 	 * buffer objects, then initialize them and store vertices and
@@ -88,32 +82,22 @@ int main(void)
 	 */
 
 	unsigned int vaos[2], vbos[2];
-	//unsigned int ebo;
 
 	glGenVertexArrays(2, vaos);
 	glGenBuffers(2, vbos);
 
-	//glGenBuffers(1, &ebo);
-
 	// triangle 1
 	glBindVertexArray(vaos[0]);
-	
+
 	glBindBuffer(GL_ARRAY_BUFFER, vbos[0]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(triangle1), triangle1,
 		     GL_STATIC_DRAW);
-
-	/* glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo); */
-	/* glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, */
-	/* 	     GL_STATIC_DRAW); */
-	
-	
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
 			      (void*)0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
 	glEnableVertexAttribArray(0);
-	glBindVertexArray(0);
 
+	// triangle 2
 	glBindVertexArray(vaos[1]);
 	glBindBuffer(GL_ARRAY_BUFFER, vbos[1]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(triangle2), triangle2,
@@ -130,18 +114,20 @@ int main(void)
 	while(!glfwWindowShouldClose(window)) {
 		/* get key presses from user */
 		process_input(window);
-		
+
 		/* set background color */
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-		
+
 		/* draw triangles */
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		glUseProgram(shader_prog);
+		glUseProgram(shaders[0]);
 		glBindVertexArray(vaos[0]);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		glBindVertexArray(0);
+
+		glUseProgram(shaders[1]);
 
 		glBindVertexArray(vaos[1]);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
